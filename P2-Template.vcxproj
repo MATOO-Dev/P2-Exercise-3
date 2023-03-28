@@ -134,6 +134,18 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\P2-Exercise-1\glad.c" />
+    <ClCompile Include="..\P2-Exercise-1\ShaderInterface.cpp" />
+    <ClCompile Include="..\P2-Exercise-1\StringHelper.cpp" />
+    <ClCompile Include="..\P2-Exercise-1\TestPlain2D.cpp" />
+    <ClCompile Include="..\P2-Exercise-1\ViewPortGL.cpp" />
+    <ClCompile Include="..\P2-Exercise-1\WindowInterface.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\P2-Exercise-1\ShaderInterface.h" />
+    <ClInclude Include="..\P2-Exercise-1\ShaderLib.h" />
+    <ClInclude Include="..\P2-Exercise-1\StringHelper.h" />
+    <ClInclude Include="..\P2-Exercise-1\ViewPortGL.h" />
+    <ClInclude Include="..\P2-Exercise-1\WindowInterface.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
