@@ -1,8 +1,0 @@
-[
-{
-  "directory": "/home/matoo/Repos/exercises-kempten/Programmierung 2/P2-Template/build",
-  "command": "/usr/bin/clang++ -g -o CMakeFiles/P2-Template.dir/main.cpp.o -c \"/home/matoo/Repos/exercises-kempten/Programmierung 2/P2-Template/main.cpp\"",
-  "file": "/home/matoo/Repos/exercises-kempten/Programmierung 2/P2-Template/main.cpp",
-  "output": "CMakeFiles/P2-Template.dir/main.cpp.o"
-}
-]

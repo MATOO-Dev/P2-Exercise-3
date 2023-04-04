@@ -1,3 +1,0 @@
-/home/matoo/Repos/exercises-kempten/Programmierung 2/P2-Template/build/CMakeFiles/P2-Template.dir
-/home/matoo/Repos/exercises-kempten/Programmierung 2/P2-Template/build/CMakeFiles/edit_cache.dir
-/home/matoo/Repos/exercises-kempten/Programmierung 2/P2-Template/build/CMakeFiles/rebuild_cache.dir
