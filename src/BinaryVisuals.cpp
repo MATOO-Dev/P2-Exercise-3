@@ -1,7 +1,7 @@
 #include "../include/BinaryVisuals.h"
 #include <limits.h>
 
-static void BinaryVisuals::PrepareBit(ViewPortGL& targetWindow, int xPos, int yPos, int width, int height, bool isOne)
+void BinaryVisuals::PrepareBit(ViewPortGL& targetWindow, int xPos, int yPos, int width, int height, bool isOne)
 {
     //if bit is one, draw a filled box using two triangles
     if(isOne)
@@ -16,7 +16,7 @@ static void BinaryVisuals::PrepareBit(ViewPortGL& targetWindow, int xPos, int yP
     }
 }
 
-static void BinaryVisuals::PrepareRepresentation(ViewPortGL& targetWindow, int xPos, int yPos, int width, int height, unsigned char value)
+void BinaryVisuals::PrepareRepresentation(ViewPortGL& targetWindow, int xPos, int yPos, int width, int height, unsigned char value)
 {
     //get bit count in unsigned char input (n)
     int inputBitCount = sizeof(value) * CHAR_BIT;
@@ -39,7 +39,7 @@ static void BinaryVisuals::PrepareRepresentation(ViewPortGL& targetWindow, int x
     }
 }
 
-static void BinaryVisuals::PrepareRepresentation(ViewPortGL& targetWindow, int xPos, int yPos, int width, int height, unsigned int value)
+void BinaryVisuals::PrepareRepresentation(ViewPortGL& targetWindow, int xPos, int yPos, int width, int height, unsigned int value)
 {
     //split int into n chars
     //iterate over split-list n times from max to min
@@ -47,6 +47,7 @@ static void BinaryVisuals::PrepareRepresentation(ViewPortGL& targetWindow, int x
         //prepare char
         //position is xpos + (width * i) + (buffer * (i - 1))
         //value is read from int
+}
 
 unsigned int BinaryVisuals::ExchangeHalves(unsigned int value, int fromBit, int toBit)
 {
@@ -67,6 +68,7 @@ unsigned int BinaryVisuals::ExchangeHalves(unsigned int value, int fromBit, int 
     //iterate from input frombit to start (index 0)
         //bitshift read value into replacing
     //return replacing
+    return 0;
 }
 
 unsigned int BinaryVisuals::Reverse(unsigned int b)
@@ -77,4 +79,5 @@ unsigned int BinaryVisuals::Reverse(unsigned int b)
     //return storage
 
     //alternatively, use suggestion from assignment sheet
+    return 0;
 }
