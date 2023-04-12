@@ -1,5 +1,6 @@
 #include "../include/BinaryVisuals.h"
 #include <limits.h>
+#include <iostream>
 
 void BinaryVisuals::PrepareBit(ViewPortGL& targetWindow, int xPos, int yPos, int width, int height, bool isOne)
 {
@@ -24,13 +25,10 @@ void BinaryVisuals::PrepareRepresentation(ViewPortGL& targetWindow, int xPos, in
     //for each bit in char
     for(int i = inputBitCount - 1; i >= 0; i--)
     {
-        //position is xpos + (width * i) + (buffer * (i - 1))
-        int buffer = 10;
-        //note: position calculation is right-to-left, but for loop is left-to-right, fix this
-        //either fix the calculation by changing the offset
-        //or
-        //change the loop direction from right-to-left aswell
-        int targetPosX = xPos + (width * i) + (buffer * (i - 1));
+        //tage origin point
+        //add offset for previously drawn boxes (inputbitcount - i - 1) * width
+        //add offset for buffer spaces between previously drawn boxes (inputbitcount * i - 1) * buffer
+        int targetPosX = xPos + (inputBitCount - i - 1) * width + (inputBitCount - i - 1) * BinaryVisuals::blockBuffer;
         //value is read from char
         bool targetValue = (value >> i) & 1;
         //prepare a new bit with those values
@@ -42,6 +40,12 @@ void BinaryVisuals::PrepareRepresentation(ViewPortGL& targetWindow, int xPos, in
 void BinaryVisuals::PrepareRepresentation(ViewPortGL& targetWindow, int xPos, int yPos, int width, int height, unsigned int value)
 {
     //split int into n chars
+    unsigned char charSplit[4];
+    unsigned char one = value << 8;
+    unsigned char two = value << 8;
+    unsigned char three = value << 8;
+    unsigned char four = value << 8;
+    //(n & ( 1 << k )) >> k
     //iterate over split-list n times from max to min
     //for each char in int
         //prepare char
