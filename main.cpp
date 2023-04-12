@@ -3,6 +3,8 @@
 #include <GLFW/glfw3.h>
 #include "include/ViewPortGL.h"
 #include "include/BinaryVisuals.h"
+#include <chrono>
+#include <thread>
 
 void test() {
     ViewPortGL vp = ViewPortGL("OpenGL Plain Test", 1000, 1000);
@@ -17,9 +19,9 @@ void test() {
     }
 }
 
-void Task1()
+void Task1A()
 {
-    ViewPortGL targetWindow = ViewPortGL("Task 1", 1000, 700);
+    ViewPortGL targetWindow = ViewPortGL("Task 1-A) bits", 1000, 700);
 
     BinaryVisuals::PrepareBit(targetWindow, 100, 100, 200, 200, true);
     BinaryVisuals::PrepareBit(targetWindow, 400, 100, 200, 200, true);
@@ -35,13 +37,10 @@ void Task1()
     while(!targetWindow.windowShouldClose());
 }
 
-void Task2(unsigned char input)
+void Task1B(unsigned char input)
 {
-    //todo: console input
-    //todo: add check if value is a valid unsigned char
-    //input = 179;
-
-    ViewPortGL targetWindow = ViewPortGL("Task 2", 1250, 550);
+    //exercise sheet value is 179
+    ViewPortGL targetWindow = ViewPortGL("Task 1-B) uchar-8", 1250, 550);
 
     BinaryVisuals::PrepareRepresentation(targetWindow, 50, 50, 50, 100, input);
     BinaryVisuals::PrepareRepresentation(targetWindow, 50, 250, 75, 75, input);
@@ -54,19 +53,44 @@ void Task2(unsigned char input)
     while(!targetWindow.windowShouldClose());
 }
 
+void Task1C(unsigned int input)
+{
+    //exercise sheet value is 2016407690
+    ViewPortGL targetWindow = ViewPortGL("Task 1-C) uint-32", 1500, 215);
+
+    BinaryVisuals::PrepareRepresentation(targetWindow, 20, 20, 32, 100, input);
+    BinaryVisuals::PrepareRepresentation(targetWindow, 20, 170, 32, 25, input);
+
+    targetWindow.sendTriangles();
+    targetWindow.sendLines();
+    targetWindow.swapBuffers();
+
+    while(!targetWindow.windowShouldClose());
+}
+
+void Task1D(long stepDelay)
+{    
+    ViewPortGL targetWindow = ViewPortGL("Task 1-D) animated uint-32", 1500, 140);
+    int i = 0;
+    while(i <= 0xffffffff && !targetWindow.windowShouldClose())
+    {
+        BinaryVisuals::PrepareRepresentation(targetWindow, 20, 20, 32, 100, (unsigned int)i);
+        targetWindow.sendTriangles();
+        targetWindow.sendLines();
+        targetWindow.swapBuffers();
+        this_thread::sleep_for(chrono::milliseconds(stepDelay));
+        i++;
+    }
+
+    while(!targetWindow.windowShouldClose());
+}
+
 int main()
 {
-    std::cout << "Hello World!" << std::endl;
-    unsigned int input = 2016407690;
-    unsigned char one = input << 8;
-    unsigned char two = input << 8;
-    unsigned char three = input << 8;
-    unsigned char four = input << 8;
-
-    std:: cout << one << two << three << four << std::endl;
-    //test();
-    //Task1();
-    Task2(one);
+    //Task1A();
+    //Task1B(179);
+    //Task1C(2016407690);
+    Task1D(500);
     
     return 0;
 }

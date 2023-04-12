@@ -1,4 +1,5 @@
 #include "../include/BinaryVisuals.h"
+#include <cmath>
 #include <limits.h>
 #include <iostream>
 
@@ -26,9 +27,9 @@ void BinaryVisuals::PrepareRepresentation(ViewPortGL& targetWindow, int xPos, in
     for(int i = inputBitCount - 1; i >= 0; i--)
     {
         //tage origin point
-        //add offset for previously drawn boxes (inputbitcount - i - 1) * width
-        //add offset for buffer spaces between previously drawn boxes (inputbitcount * i - 1) * buffer
-        int targetPosX = xPos + (inputBitCount - i - 1) * width + (inputBitCount - i - 1) * BinaryVisuals::blockBuffer;
+        //add offset for previously drawn bits (inputbitcount - i - 1) * width
+        //add offset for buffer spaces between previously drawn bits (inputbitcount * i - 1) * buffer
+        int targetPosX = xPos + (inputBitCount - i - 1) * width + (inputBitCount - i - 1) * BinaryVisuals::bitBuffer;
         //value is read from char
         bool targetValue = (value >> i) & 1;
         //prepare a new bit with those values
@@ -41,16 +42,17 @@ void BinaryVisuals::PrepareRepresentation(ViewPortGL& targetWindow, int xPos, in
 {
     //split int into n chars
     unsigned char charSplit[4];
-    unsigned char one = value << 8;
-    unsigned char two = value << 8;
-    unsigned char three = value << 8;
-    unsigned char four = value << 8;
-    //(n & ( 1 << k )) >> k
-    //iterate over split-list n times from max to min
-    //for each char in int
-        //prepare char
-        //position is xpos + (width * i) + (buffer * (i - 1))
-        //value is read from int
+
+    for(int i = 0; i <= 24; i += 8)
+        charSplit[i/8] = (value >> i) ^ 0;
+
+    for(int i = 3; i >= 0; i--)
+    {
+        //add offset for already placed bytes
+        int targetPosX = xPos + (8 * width + 7 * bitBuffer + byteBuffer) * abs(i - 3);
+        //call prepareRepresentation for char
+        PrepareRepresentation(targetWindow, targetPosX, yPos, width, height, charSplit[i]);
+    }
 }
 
 unsigned int BinaryVisuals::ExchangeHalves(unsigned int value, int fromBit, int toBit)
