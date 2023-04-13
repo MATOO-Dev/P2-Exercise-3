@@ -60,30 +60,36 @@ void BinaryVisuals::PrepareRepresentation(ViewPortGL& targetWindow, int xPos, in
 unsigned int BinaryVisuals::ExchangeHalves(unsigned int value, int fromBit, int toBit)
 {
     //get delta between from and to bits
-    int rangeDelta = toBit - fromBit;
+    int rangeDelta = toBit - fromBit + 1;
+
     //if delta % 2 != 0, return
     if(rangeDelta % 2 != 0 || rangeDelta < 0)
         return 0;
 
-    //create storage variable
-    //iterate left starting from rights
+    //26 is 32bit - delta(tobit-frombit)
+    //store first bits so they dont get lost
+    unsigned int storage = value << (32 - rangeDelta) >> (32 - rangeDelta) ^ 0;
 
+    //7 is frombit index
+    //extract range to flip
+    unsigned int extract = value >> fromBit << (32 - rangeDelta) >> (32 - rangeDelta) ^ 0;
 
+    //split extract into 2, then flip them
+    //3 is delta(tobit-frombit)/2
+    unsigned int leftHalf = extract >> rangeDelta / 2;
 
-    //frombit to middle (frombit + delta / 2)
-        //bitshift read value into storage
-    //iterate left starting from middle
-    //middle (frombit + delta / 2) to tobit
-        //bitshift read value into storage
-    //create replacing variable
-    //iterate from input end (index 31) to tobit
-        //bitshift read value into replacing
-    //iterate over storage variable
-        //bitshift read value into replacing
-    //iterate from input frombit to start (index 0)
-        //bitshift read value into replacing
-    //return replacing
-    return value;
+    //29 is 32bit - delta(tobit-frombit)/2
+    unsigned int rightHalf = extract << (32 - rangeDelta / 2) >> (32 - rangeDelta / 2);
+
+    extract = 0 | rightHalf << rangeDelta / 2 | leftHalf;
+
+    //merge everything back together
+    //13 is tobit index + 1
+    unsigned int merge = value >> (toBit + 1);
+    merge = merge << rangeDelta | extract;
+    merge = merge << (rangeDelta + 1) | storage;
+        
+    return merge;        
 }
 
 unsigned int BinaryVisuals::Reverse(unsigned int b)

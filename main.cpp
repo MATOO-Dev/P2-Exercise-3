@@ -75,68 +75,14 @@ void Task1D(long stepDelay)
 
 void Task2(unsigned int value, int fromBit, int toBit)
 {
-    //1500x265
-    ViewPortGL targetWindow = ViewPortGL("Task 2", 1500, 500);
+    ViewPortGL targetWindow = ViewPortGL("Task 2", 1500, 256);
     
+    //flip bit blocks
     unsigned int changedValue = BinaryVisuals::ExchangeHalves(value, fromBit, toBit);
-
-    //BinaryVisuals::PrepareRepresentation(targetWindow, 20, 20, 32, 100, value);
-
-
-
-
-
-    //26 is 32bit - delta(tobit-frombit)
-    //store first bits so they dont get lost
-    unsigned int storage = value << 26 >> 26 ^ 0;
-
-    //7 is frombit index
-    //extract range to flip
-    unsigned int extract = value >> 7 << 26 >> 26 ^ 0;
-
-
-    //split extract into 2, then flip them
-    //3 is delta(tobit-frombit)/2
-    unsigned int leftHalf = extract >> 3;
-    std::cout << "left half value is " << leftHalf << ", should be 3" << std::endl;
-
-    //29 is 32bit - delta(tobit-frombit)/2
-    unsigned int rightHalf = extract << 29 >> 29;
-    std::cout << "right half value is " << rightHalf << ", should be 5" << std::endl;
-
-    extract = 0 | rightHalf << 3 | leftHalf;
-
-
-
-
-    //merge everything back together
-    //13 is tobit index + 1
-    unsigned int merge = value >> 13;
-    merge = merge << 6 | extract;
-    merge = merge << 7 | storage;
-
-
-
-
-    if(merge == 2383394201)
-        std::cout << "success" << std::endl;
-    else
-        std::cout << "not quite there yet" << std::endl;
-
-
-
-
-
-
-
-
-
 
     //display results
     BinaryVisuals::PrepareRepresentation(targetWindow, 20, 20, 32, 100, value);
-    BinaryVisuals::PrepareRepresentation(targetWindow, 20, 140, 32, 100, extract);
-    BinaryVisuals::PrepareRepresentation(targetWindow, 20, 260, 32, 100, storage);
-    BinaryVisuals::PrepareRepresentation(targetWindow, 20, 380, 32, 100, merge);
+    BinaryVisuals::PrepareRepresentation(targetWindow, 20, 140, 32, 100, changedValue);
 
     targetWindow.sendLines();
     targetWindow.sendTriangles();
