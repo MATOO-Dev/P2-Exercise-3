@@ -75,13 +75,17 @@ void Task1D(long stepDelay)
 
 void Task2(unsigned int value, int fromBit, int toBit)
 {
-    ViewPortGL targetWindow = ViewPortGL("Task 2", 1500, 256);
+    //1500x256
+    ViewPortGL targetWindow = ViewPortGL("Task 2", 1500, 260);
     
     //flip bit blocks
-    unsigned int changedValue = BinaryVisuals::ExchangeHalves(value, fromBit, toBit);
+    unsigned int changedValue = BinaryVisuals::ExchangeHalves(value, fromBit, toBit, targetWindow);
 
     //display results
+    //original value
     BinaryVisuals::PrepareRepresentation(targetWindow, 20, 20, 32, 100, value);
+    
+    //calulcated value
     BinaryVisuals::PrepareRepresentation(targetWindow, 20, 140, 32, 100, changedValue);
 
     targetWindow.sendLines();
@@ -98,6 +102,8 @@ int main()
     //Task1C(2016407690);
     //Task1D(500);
     Task2(2383392409, 7, 12);
-    
     return 0;
+
+
+    
 }
