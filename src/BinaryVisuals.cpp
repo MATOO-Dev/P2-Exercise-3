@@ -124,44 +124,43 @@ unsigned int BinaryVisuals::ExchangeHalves(unsigned int value, int fromBit, int 
     */
 }
 
-unsigned int BinaryVisuals::Reverse(unsigned int b, int length, ViewPortGL& debug)
+
+unsigned int GetUIntDigitCount(unsigned int value)
 {
-    /*
-    debug.clearViewPort();
+    unsigned int digitCount = 0;
+    do
+    {
+        digitCount++;
+        value /= 2;
+    }
+    while(value);
+    return  digitCount;
+}
 
-    std::cout << "current length is " << length << std::endl;
-    if(length == 8)
+unsigned int BinaryVisuals::Reverse(unsigned int b, int length)
+{
+    //this doesnt account for leading zeroes, so it breaks the algorithm;
+    //length = GetUIntDigitCount(b);
+
+    if(length == 1)
         return b;
-
-    BinaryVisuals::PrepareRepresentation(debug, 20, 20, 32, 100, b);
-
-
 
     int halfLength = length / 2;
 
     //extract the left half
     //eg 8  -> move right 4
     unsigned int leftHalf = b >> halfLength;    
-    //BinaryVisuals::PrepareRepresentation(debug, 20, 140, 32, 100, leftHalf << halfLength);
 
     //extract the right half
     //eg 8  -> move left 24+4 -> move right 24+4
     unsigned int rightHalf = b << (32 - halfLength) >> (32 - halfLength);
-    //BinaryVisuals::PrepareRepresentation(debug, 20, 260, 32, 100, rightHalf);
 
     //recursively call on both halves
-    if (length > 0)
-    {
-        leftHalf = Reverse(leftHalf, halfLength, debug);
-        rightHalf = Reverse(rightHalf, halfLength, debug);
-    }
+    leftHalf = Reverse(leftHalf, halfLength);
+    //std::cout << "left half length: " << GetUIntDigitCount(leftHalf) << std::endl;
+    rightHalf = Reverse(rightHalf, halfLength);
+    //std::cout << "right half length: " << GetUIntDigitCount(rightHalf) << std::endl;
 
     //stitch both halves back together but flip them
-    b = 0 << halfLength | rightHalf << halfLength | leftHalf;
-
-    */
-    return b;
-
-    //unsigned int test = ExchangeHalves(b, 0, 1);
-    //return test;
+    return 0 << halfLength | rightHalf << halfLength | leftHalf;
 }

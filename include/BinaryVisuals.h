@@ -13,7 +13,7 @@ public:
 
 	static unsigned int ExchangeHalves(unsigned int value, int fromBit, int toBit);
 	
-	static unsigned int Reverse(unsigned int b, int length, ViewPortGL& debug);
+	static unsigned int Reverse(unsigned int b, int length);
 
 	static const unsigned int bitBuffer = 10;
 	static const unsigned int byteBuffer = 50;

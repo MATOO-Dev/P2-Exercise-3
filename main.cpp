@@ -102,17 +102,16 @@ void Task2(unsigned int value, int fromBit, int toBit)
 
 void Task3(unsigned int value)
 {
-    ViewPortGL targetWindow = ViewPortGL("Task 3 - reverse", 1500, 500);
+    ViewPortGL targetWindow = ViewPortGL("Task 3 - reverse", 1500, 260);
     
     //flip bit blocks
-    unsigned int reversedValue = BinaryVisuals::Reverse(value, 32, targetWindow);
+    unsigned int reversedValue = BinaryVisuals::Reverse(value, 32);
 
     //display results
     //original value
     BinaryVisuals::PrepareRepresentation(targetWindow, 20, 20, 32, 100, value);
     
     //reversed value
-    //140 or 380
     BinaryVisuals::PrepareRepresentation(targetWindow, 20, 140, 32, 100, reversedValue);
 
     targetWindow.sendLines();
@@ -129,10 +128,7 @@ int main()
     //Task1B(179);
     //Task1C(2016407690);
     //Task1D(500);
-    Task2(2383392409, 7, 12);
-    //Task3(2383392409);
+    //Task2(2383392409, 7, 12);
+    Task3(2383392409);
     return 0;
-
-
-    
 }
