@@ -1,9 +1,9 @@
 #include "../include/BinaryVisuals.h"
 #include <cmath>
-#include <cstddef>
+#include <cstdio>
 #include <limits.h>
 #include <iostream>
-#include <stdexcept>
+#include <bitset>
 
 void BinaryVisuals::PrepareBit(ViewPortGL& targetWindow, int xPos, int yPos, int width, int height, bool isOne)
 {
@@ -141,6 +141,8 @@ unsigned int BinaryVisuals::Reverse(unsigned int b, int length)
 {
     //this doesnt account for leading zeroes, so it breaks the algorithm;
     //length = GetUIntDigitCount(b);
+    //this doesnt convert to binary first, so it breaks the algorithm
+    //length = std::to_string(b).length();
 
     if(length == 1)
         return b;
@@ -157,9 +159,7 @@ unsigned int BinaryVisuals::Reverse(unsigned int b, int length)
 
     //recursively call on both halves
     leftHalf = Reverse(leftHalf, halfLength);
-    //std::cout << "left half length: " << GetUIntDigitCount(leftHalf) << std::endl;
     rightHalf = Reverse(rightHalf, halfLength);
-    //std::cout << "right half length: " << GetUIntDigitCount(rightHalf) << std::endl;
 
     //stitch both halves back together but flip them
     return 0 << halfLength | rightHalf << halfLength | leftHalf;
