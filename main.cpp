@@ -22,7 +22,8 @@ void Task1A()
     targetWindow.sendLines();
     targetWindow.swapBuffers();
 
-    while(!targetWindow.windowShouldClose());
+    while(!targetWindow.windowShouldClose()) 
+        this_thread::sleep_for(chrono::milliseconds(100));
 }
 
 void Task1B(unsigned char input)
@@ -38,7 +39,8 @@ void Task1B(unsigned char input)
     targetWindow.sendLines();
     targetWindow.swapBuffers();
 
-    while(!targetWindow.windowShouldClose());
+    while(!targetWindow.windowShouldClose()) 
+        this_thread::sleep_for(chrono::milliseconds(100));
 }
 
 void Task1C(unsigned int input)
@@ -53,13 +55,14 @@ void Task1C(unsigned int input)
     targetWindow.sendLines();
     targetWindow.swapBuffers();
 
-    while(!targetWindow.windowShouldClose());
+    while(!targetWindow.windowShouldClose()) 
+        this_thread::sleep_for(chrono::milliseconds(100));
 }
 
 void Task1D(long stepDelay)
 {    
     ViewPortGL targetWindow = ViewPortGL("Task 1-D) animated uint-32", 1500, 140);
-    int i = 0;
+    unsigned int i = 0;
     while(i <= 0xffffffff && !targetWindow.windowShouldClose())
     {
         BinaryVisuals::PrepareRepresentation(targetWindow, 20, 20, 32, 100, (unsigned int)i);
@@ -70,16 +73,17 @@ void Task1D(long stepDelay)
         i++;
     }
 
-    while(!targetWindow.windowShouldClose());
+    while(!targetWindow.windowShouldClose()) 
+        this_thread::sleep_for(chrono::milliseconds(100));
 }
 
 void Task2(unsigned int value, int fromBit, int toBit)
 {
-    //1500x256
-    ViewPortGL targetWindow = ViewPortGL("Task 2", 1500, 260);
+    //260
+    ViewPortGL targetWindow = ViewPortGL("Task 2 - swap halves", 1500, 260);
     
     //flip bit blocks
-    unsigned int changedValue = BinaryVisuals::ExchangeHalves(value, fromBit, toBit, targetWindow);
+    unsigned int changedValue = BinaryVisuals::ExchangeHalves(value, fromBit, toBit);
 
     //display results
     //original value
@@ -92,7 +96,31 @@ void Task2(unsigned int value, int fromBit, int toBit)
     targetWindow.sendTriangles();
     targetWindow.swapBuffers();
 
-    while(!targetWindow.windowShouldClose());
+    while(!targetWindow.windowShouldClose()) 
+        this_thread::sleep_for(chrono::milliseconds(100));
+}
+
+void Task3(unsigned int value)
+{
+    ViewPortGL targetWindow = ViewPortGL("Task 3 - reverse", 1500, 500);
+    
+    //flip bit blocks
+    unsigned int reversedValue = BinaryVisuals::Reverse(value, 32, targetWindow);
+
+    //display results
+    //original value
+    BinaryVisuals::PrepareRepresentation(targetWindow, 20, 20, 32, 100, value);
+    
+    //reversed value
+    //140 or 380
+    BinaryVisuals::PrepareRepresentation(targetWindow, 20, 140, 32, 100, reversedValue);
+
+    targetWindow.sendLines();
+    targetWindow.sendTriangles();
+    targetWindow.swapBuffers();
+
+    while(!targetWindow.windowShouldClose()) 
+        this_thread::sleep_for(chrono::milliseconds(100));
 }
 
 int main()
@@ -102,6 +130,7 @@ int main()
     //Task1C(2016407690);
     //Task1D(500);
     Task2(2383392409, 7, 12);
+    //Task3(2383392409);
     return 0;
 
 

@@ -57,7 +57,7 @@ void BinaryVisuals::PrepareRepresentation(ViewPortGL& targetWindow, int xPos, in
     }
 }
 
-unsigned int BinaryVisuals::ExchangeHalves(unsigned int value, int fromBit, int toBit, ViewPortGL& debug)
+unsigned int BinaryVisuals::ExchangeHalves(unsigned int value, int fromBit, int toBit)
 {
     //get delta between from and to bits
     int rangeDelta = toBit - fromBit + 1;
@@ -69,6 +69,9 @@ unsigned int BinaryVisuals::ExchangeHalves(unsigned int value, int fromBit, int 
     //store first bits so they dont get lost
     //move left so everything except left storage is gone -> move back right
     unsigned int storage = value << (32-fromBit) >> (32-fromBit);
+    //fix for edge case where from bit is 0, causing overflow error
+    if(fromBit == 0)
+        storage = 0;
 
     //extract range to flip
     //move left so left storage is gone -> move back and further so right storage is gone
@@ -105,6 +108,8 @@ unsigned int BinaryVisuals::ExchangeHalves(unsigned int value, int fromBit, int 
     /*
     //create right storage
         unsigned int storage = value << (32-fromBit) >> (32-fromBit);
+        if(fromBit == 0)
+            storage = 0;
     //extract range to flip
         unsigned int extract = value << (32-toBit-1) >> (32+fromBit-toBit-1);
     //extract left half
@@ -119,13 +124,44 @@ unsigned int BinaryVisuals::ExchangeHalves(unsigned int value, int fromBit, int 
     */
 }
 
-unsigned int BinaryVisuals::Reverse(unsigned int b)
+unsigned int BinaryVisuals::Reverse(unsigned int b, int length, ViewPortGL& debug)
 {
-    //create storage variable
-    //iterate over input b from 0 to 31
-        //bitshift read value into storage
-    //return storage
+    /*
+    debug.clearViewPort();
 
-    //alternatively, use suggestion from assignment sheet
-    return 0;
+    std::cout << "current length is " << length << std::endl;
+    if(length == 8)
+        return b;
+
+    BinaryVisuals::PrepareRepresentation(debug, 20, 20, 32, 100, b);
+
+
+
+    int halfLength = length / 2;
+
+    //extract the left half
+    //eg 8  -> move right 4
+    unsigned int leftHalf = b >> halfLength;    
+    //BinaryVisuals::PrepareRepresentation(debug, 20, 140, 32, 100, leftHalf << halfLength);
+
+    //extract the right half
+    //eg 8  -> move left 24+4 -> move right 24+4
+    unsigned int rightHalf = b << (32 - halfLength) >> (32 - halfLength);
+    //BinaryVisuals::PrepareRepresentation(debug, 20, 260, 32, 100, rightHalf);
+
+    //recursively call on both halves
+    if (length > 0)
+    {
+        leftHalf = Reverse(leftHalf, halfLength, debug);
+        rightHalf = Reverse(rightHalf, halfLength, debug);
+    }
+
+    //stitch both halves back together but flip them
+    b = 0 << halfLength | rightHalf << halfLength | leftHalf;
+
+    */
+    return b;
+
+    //unsigned int test = ExchangeHalves(b, 0, 1);
+    //return test;
 }

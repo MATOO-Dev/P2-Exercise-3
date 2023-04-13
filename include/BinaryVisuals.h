@@ -11,9 +11,9 @@ public:
 	
 	static unsigned char ExtractCharsFromInt(unsigned int value, int fromIndex, int toIndex);
 
-	static unsigned int ExchangeHalves(unsigned int value, int fromBit, int toBit, ViewPortGL& debug);
+	static unsigned int ExchangeHalves(unsigned int value, int fromBit, int toBit);
 	
-	static unsigned int Reverse(unsigned int b);
+	static unsigned int Reverse(unsigned int b, int length, ViewPortGL& debug);
 
 	static const unsigned int bitBuffer = 10;
 	static const unsigned int byteBuffer = 50;
