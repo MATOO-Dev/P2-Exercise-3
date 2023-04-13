@@ -63,7 +63,7 @@ unsigned int BinaryVisuals::ExchangeHalves(unsigned int value, int fromBit, int 
     int rangeDelta = toBit - fromBit + 1;
 
     //if delta % 2 != 0, return
-    if(rangeDelta % 2 != 0 || rangeDelta < 0)
+    if(rangeDelta % 2 != 0 || rangeDelta < 2)
         return 0;
 
     //store first bits so they dont get lost
