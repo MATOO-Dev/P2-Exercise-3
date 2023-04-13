@@ -1,7 +1,9 @@
 #include "../include/BinaryVisuals.h"
 #include <cmath>
+#include <cstddef>
 #include <limits.h>
 #include <iostream>
+#include <stdexcept>
 
 void BinaryVisuals::PrepareBit(ViewPortGL& targetWindow, int xPos, int yPos, int width, int height, bool isOne)
 {
@@ -40,12 +42,12 @@ void BinaryVisuals::PrepareRepresentation(ViewPortGL& targetWindow, int xPos, in
 
 void BinaryVisuals::PrepareRepresentation(ViewPortGL& targetWindow, int xPos, int yPos, int width, int height, unsigned int value)
 {
-    //split int into n chars
+    //split int into 4 chars
     unsigned char charSplit[4];
-
     for(int i = 0; i <= 24; i += 8)
         charSplit[i/8] = (value >> i) ^ 0;
 
+    //for each of the 4 chars
     for(int i = 3; i >= 0; i--)
     {
         //add offset for already placed bytes
@@ -58,9 +60,16 @@ void BinaryVisuals::PrepareRepresentation(ViewPortGL& targetWindow, int xPos, in
 unsigned int BinaryVisuals::ExchangeHalves(unsigned int value, int fromBit, int toBit)
 {
     //get delta between from and to bits
+    int rangeDelta = toBit - fromBit;
     //if delta % 2 != 0, return
+    if(rangeDelta % 2 != 0 || rangeDelta < 0)
+        return 0;
+
     //create storage variable
-    //iterate left starting from right
+    //iterate left starting from rights
+
+
+
     //frombit to middle (frombit + delta / 2)
         //bitshift read value into storage
     //iterate left starting from middle
@@ -74,7 +83,7 @@ unsigned int BinaryVisuals::ExchangeHalves(unsigned int value, int fromBit, int 
     //iterate from input frombit to start (index 0)
         //bitshift read value into replacing
     //return replacing
-    return 0;
+    return value;
 }
 
 unsigned int BinaryVisuals::Reverse(unsigned int b)
